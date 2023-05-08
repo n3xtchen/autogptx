@@ -137,7 +137,7 @@ class Agent:
 
                 logger.info(
                     "Enter 'y' to authorise command, 'y -N' to run N continuous commands, 's' to run self-feedback commands"
-                    "'n' to exit program, or enter feedback for "
+                    ", 'n' to exit program, or enter feedback for "
                     f"{self.ai_name}..."
                 )
                 while True:
@@ -289,9 +289,11 @@ class Agent:
         """
         ai_role = self.config.ai_role
 
-        feedback_prompt = f"Below is a message from an AI agent with the role of {ai_role}. Please review the provided Thought, Reasoning, Plan, and Criticism. If these elements accurately contribute to the successful execution of the assumed role, respond with the letter 'Y' followed by a space, and then explain why it is effective. If the provided information is not suitable for achieving the role's objectives, please provide one or more sentences addressing the issue and suggesting a resolution."
+        # feedback_prompt = f"Below is a message from an AI agent with the role of {ai_role}. Please review the provided Thought, Reasoning, Plan, and Criticism. If these elements accurately contribute to the successful execution of the assumed role, respond with the letter 'Y' followed by a space, and then explain why it is effective. If the provided information is not suitable for achieving the role's objectives, please provide one or more sentences addressing the issue and suggesting a resolution."
+        feedback_prompt = f"以下是一条来自具有 {ai_role} 角色的AI代理的消息。请查看提供的思路、推理、计划和批评。如果这些元素准确地有助于成功执行所扮演的角色，请用字母 'Y' 加上一个空格作出回应，然后解释为什么它是有效的。如果提供的信息不适合实现角色的目标，请提供一两个句子解决问题并建议解决方法。"
         reasoning = thoughts.get("reasoning", "")
         plan = thoughts.get("plan", "")
+        # bug？不是 text，参考回应格式
         thought = thoughts.get("thoughts", "")
         criticism = thoughts.get("criticism", "")
         feedback_thoughts = thought + reasoning + plan + criticism

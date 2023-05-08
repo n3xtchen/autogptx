@@ -38,7 +38,8 @@ def generate_context(prompt, relevant_memory, full_message_history, model):
     current_context = [
         create_chat_message("system", prompt),
         create_chat_message(
-            "system", f"The current time and date is {time.strftime('%c')}"
+            # "system", f"The current time and date is {time.strftime('%c')}"
+            "system", f"当前的日期和时间: {time.strftime('%c')}"
         ),
         # create_chat_message(
         #     "system",
@@ -180,11 +181,14 @@ def chat_with_ai(
                 system_message = (
                     f"Your remaining API budget is ${remaining_budget:.3f}"
                     + (
-                        " BUDGET EXCEEDED! SHUT DOWN!\n\n"
+                        # " BUDGET EXCEEDED! SHUT DOWN!\n\n"
+                        " 预算超支！关闭！\n\n"
                         if remaining_budget == 0
-                        else " Budget very nearly exceeded! Shut down gracefully!\n\n"
+                        # else " Budget very nearly exceeded! Shut down gracefully!\n\n"
+                        else " 预算几乎用尽，请优雅地关闭！\n\n"
                         if remaining_budget < 0.005
-                        else " Budget nearly exceeded. Finish up.\n\n"
+                        # else " Budget nearly exceeded. Finish up.\n\n"
+                        else " 预算接近枯竭，请尽快结束。\n\n"
                         if remaining_budget < 0.01
                         else "\n\n"
                     )

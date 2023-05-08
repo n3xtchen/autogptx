@@ -125,10 +125,11 @@ class AIConfig:
         """
 
         prompt_start = (
-            "Your decisions must always be made independently without"
-            " seeking user assistance. Play to your strengths as an LLM and pursue"
-            " simple strategies with no legal complications."
-            ""
+            # "Your decisions must always be made independently without"
+            # " seeking user assistance. Play to your strengths as an LLM and pursue"
+            # " simple strategies with no legal complications."
+            "您的决策必须始终独立做出，不寻求用户的帮助。发挥您作为LLM的优势，"
+            "并追求没有法律复杂性的简单策略。"
         )
 
         from autogpt.config import Config
@@ -155,14 +156,17 @@ class AIConfig:
                 else distro.name(pretty=True)
             )
 
-            prompt_start += f"\nThe OS you are running on is: {os_info}"
+            # prompt_start += f"\nThe OS you are running on is: {os_info}"
+            prompt_start += f"\n您正在运行的操作系统是: {os_info}"
 
         # Construct full prompt
-        full_prompt = f"You are {prompt_generator.name}, {prompt_generator.role}\n{prompt_start}\n\nGOALS:\n\n"
+        # full_prompt = f"You are {prompt_generator.name}, {prompt_generator.role}\n{prompt_start}\n\nGOALS:\n\n"
+        full_prompt = f"你是{prompt_generator.name}, {prompt_generator.role}\n{prompt_start}\n\n目标:\n\n"
         for i, goal in enumerate(self.ai_goals):
             full_prompt += f"{i+1}. {goal}\n"
         if self.api_budget > 0.0:
-            full_prompt += f"\nIt takes money to let you run. Your API budget is ${self.api_budget:.3f}"
+            # full_prompt += f"\nIt takes money to let you run. Your API budget is ${self.api_budget:.3f}"
+            full_prompt += f"\n运行需要一定的费用. 你的 API 预算是 ${self.api_budget:.3f}"
         self.prompt_generator = prompt_generator
         full_prompt += f"\n\n{prompt_generator.generate_prompt_string()}"
         return full_prompt

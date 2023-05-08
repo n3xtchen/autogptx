@@ -41,7 +41,8 @@ def scrape_text(url: str) -> str:
             text = "\n".join(chunk for chunk in chunks if chunk)
 
         except Exception as e:
-            text = f"Error: {str(e)}"
+            # text = f"Error: {str(e)}"
+            text = f"错误: {str(e)}"
 
         finally:
             browser.close()
@@ -74,7 +75,8 @@ def scrape_links(url: str) -> str | list[str]:
             formatted_links = format_hyperlinks(hyperlinks)
 
         except Exception as e:
-            formatted_links = f"Error: {str(e)}"
+            # formatted_links = f"Error: {str(e)}"
+            formatted_links = f"错误: {str(e)}"
 
         finally:
             browser.close()

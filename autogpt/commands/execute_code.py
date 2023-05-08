@@ -13,7 +13,8 @@ from autogpt.logs import logger
 CFG = Config()
 
 
-@command("execute_python_file", "Execute Python File", '"filename": "<filename>"')
+# @command("execute_python_file", "Execute Python File", '"filename": "<filename>"')
+@command("execute_python_file", "执行 Python 文件", '"filename": "<文件名>"')
 def execute_python_file(filename: str) -> str:
     """Execute a Python file in a Docker container and return the output
 
@@ -26,10 +27,12 @@ def execute_python_file(filename: str) -> str:
     logger.info(f"Executing file '{filename}'")
 
     if not filename.endswith(".py"):
-        return "Error: Invalid file type. Only .py files are allowed."
+        # return "Error: Invalid file type. Only .py files are allowed."
+        return "错误: 无效的文件类型。只允许使用.py文件。"
 
     if not os.path.isfile(filename):
-        return f"Error: File '{filename}' does not exist."
+        # return f"Error: File '{filename}' does not exist."
+        return f"错误: 文件 '{filename}' 不存在。"
 
     if we_are_running_in_a_docker_container():
         result = subprocess.run(
@@ -38,7 +41,8 @@ def execute_python_file(filename: str) -> str:
         if result.returncode == 0:
             return result.stdout
         else:
-            return f"Error: {result.stderr}"
+            # return f"Error: {result.stderr}"
+            return f"错误: {result.stderr}"
 
     try:
         client = docker.from_env()
@@ -91,20 +95,26 @@ def execute_python_file(filename: str) -> str:
         logger.warn(
             "Could not run the script in a container. If you haven't already, please install Docker https://docs.docker.com/get-docker/"
         )
-        return f"Error: {str(e)}"
+        # return f"Error: {str(e)}"
+        return f"错误: {str(e)}"
 
     except Exception as e:
-        return f"Error: {str(e)}"
+        # return f"Error: {str(e)}"
+        return f"错误: {str(e)}"
 
 
 @command(
     "execute_shell",
-    "Execute Shell Command, non-interactive commands only",
-    '"command_line": "<command_line>"',
+    # "Execute Shell Command, non-interactive commands only",
+    "执行Shell命令，仅限非交互式命令。",
+    # '"command_line": "<command_line>"',
+    '"command_line": "<命令行>"',
     CFG.execute_local_commands,
-    "You are not allowed to run local shell commands. To execute"
-    " shell commands, EXECUTE_LOCAL_COMMANDS must be set to 'True' "
-    "in your config. Do not attempt to bypass the restriction.",
+    # "You are not allowed to run local shell commands. To execute"
+    # " shell commands, EXECUTE_LOCAL_COMMANDS must be set to 'True' "
+    # "in your config. Do not attempt to bypass the restriction.",
+    "您不被允许运行本地shell命令。要执行Shell命令，必须在您的配置中 "
+    "将 EXECUTE_LOCAL_COMMANDS 设置为“True”。请不要尝试绕过此限制。",
 )
 def execute_shell(command_line: str) -> str:
     """Execute a shell command and return the output
@@ -136,12 +146,16 @@ def execute_shell(command_line: str) -> str:
 
 @command(
     "execute_shell_popen",
-    "Execute Shell Command, non-interactive commands only",
-    '"command_line": "<command_line>"',
+    # "Execute Shell Command, non-interactive commands only",
+    "执行Shell命令，仅限非交互式命令。",
+    # '"command_line": "<command_line>"',
+    '"command_line": "<命令行>"',
     CFG.execute_local_commands,
-    "You are not allowed to run local shell commands. To execute"
-    " shell commands, EXECUTE_LOCAL_COMMANDS must be set to 'True' "
-    "in your config. Do not attempt to bypass the restriction.",
+    # "You are not allowed to run local shell commands. To execute"
+    # " shell commands, EXECUTE_LOCAL_COMMANDS must be set to 'True' "
+    # "in your config. Do not attempt to bypass the restriction.",
+    "您不被允许运行本地shell命令。要执行Shell命令，必须在您的配置中 "
+    "将 EXECUTE_LOCAL_COMMANDS 设置为“True”。请不要尝试绕过此限制。",
 )
 def execute_shell_popen(command_line) -> str:
     """Execute a shell command with Popen and returns an english description
@@ -172,7 +186,8 @@ def execute_shell_popen(command_line) -> str:
 
     os.chdir(current_dir)
 
-    return f"Subprocess started with PID:'{str(process.pid)}'"
+    # return f"Subprocess started with PID:'{str(process.pid)}'"
+    return f"子进程已启动，PID为:'{str(process.pid)}'"
 
 
 def we_are_running_in_a_docker_container() -> bool:

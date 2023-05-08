@@ -24,13 +24,19 @@ class PromptGenerator:
         self.role = "AI"
         self.response_format = {
             "thoughts": {
-                "text": "thought",
-                "reasoning": "reasoning",
-                "plan": "- short bulleted\n- list that conveys\n- long-term plan",
-                "criticism": "constructive self-criticism",
-                "speak": "thoughts summary to say to user",
+                # "text": "thought",
+                # "reasoning": "reasoning",
+                # "plan": "- short bulleted\n- list that conveys\n- long-term plan",
+                # "criticism": "constructive self-criticism",
+                # "speak": "thoughts summary to say to user",
+                "text": "思考",
+                "reasoning": "推理",
+                "plan": "- 短点的项目符号列表\n- 表达信息的列表\n- 长期计划",
+                "criticism": "建设性的自我批评",
+                "speak": "对用户进行思路总结的话",
             },
             "command": {"name": "command name", "args": {"arg name": "value"}},
+            # "command": {"name": "命令名称", "args": {"参数名": "参数值"}},
         }
 
     def add_constraint(self, constraint: str) -> None:
@@ -141,15 +147,24 @@ class PromptGenerator:
         Returns:
             str: The generated prompt string.
         """
-        formatted_response_format = json.dumps(self.response_format, indent=4)
+        formatted_response_format = json.dumps(self.response_format, indent=4, ensure_ascii=False)
         return (
-            f"Constraints:\n{self._generate_numbered_list(self.constraints)}\n\n"
-            "Commands:\n"
+            # f"Constraints:\n{self._generate_numbered_list(self.constraints)}\n\n"
+            # "Commands:\n"
+            # f"{self._generate_numbered_list(self.commands, item_type='command')}\n\n"
+            # f"Resources:\n{self._generate_numbered_list(self.resources)}\n\n"
+            # "Performance Evaluation:\n"
+            # f"{self._generate_numbered_list(self.performance_evaluation)}\n\n"
+            # "You should only respond in JSON format as described below \nResponse"
+            # f" Format: \n{formatted_response_format} \nEnsure the response can be"
+            # " parsed by Python json.loads"
+            f"限制条件:\n{self._generate_numbered_list(self.constraints)}\n\n"
+            "命令:\n"
             f"{self._generate_numbered_list(self.commands, item_type='command')}\n\n"
-            f"Resources:\n{self._generate_numbered_list(self.resources)}\n\n"
-            "Performance Evaluation:\n"
+            f"资源:\n{self._generate_numbered_list(self.resources)}\n\n"
+            "绩效评估:\n"
             f"{self._generate_numbered_list(self.performance_evaluation)}\n\n"
-            "You should only respond in JSON format as described below \nResponse"
-            f" Format: \n{formatted_response_format} \nEnsure the response can be"
-            " parsed by Python json.loads"
+            "您应该仅以以下描述的 JSON 格式进行响应：\n"
+            f"Response 格式: \n{formatted_response_format} \n"
+            "确保 Response 可以通过 Python 的 json.loads 解析。"
         )

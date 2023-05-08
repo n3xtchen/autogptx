@@ -11,7 +11,8 @@ from autogpt.config import Config
 CFG = Config()
 
 
-@command("google", "Google Search", '"query": "<query>"', not CFG.google_api_key)
+# @command("google", "Google Search", '"query": "<query>"', not CFG.google_api_key)
+@command("google", "谷歌搜索", '"query": "<检索>"', not CFG.google_api_key)
 def google_search(query: str, num_results: int = 8) -> str:
     """Return the results of a Google search
 
@@ -39,10 +40,13 @@ def google_search(query: str, num_results: int = 8) -> str:
 
 @command(
     "google",
-    "Google Search",
-    '"query": "<query>"',
+    # "Google Search",
+    "谷歌检索",
+    # '"query": "<query>"',
+    '"query": "<检索>"',
     bool(CFG.google_api_key),
-    "Configure google_api_key.",
+    # "Configure google_api_key.",
+    "配置 google_api_key.",
 )
 def google_official_search(query: str, num_results: int = 8) -> str | list[str]:
     """Return the results of a Google search using the official Google API

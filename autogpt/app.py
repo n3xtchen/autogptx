@@ -139,7 +139,8 @@ def execute_command(
 
 
 @command(
-    "get_text_summary", "Get text summary", '"url": "<url>", "question": "<question>"'
+    # "get_text_summary", "Get text summary", '"url": "<url>", "question": "<question>"'
+    "get_text_summary", "获取文本摘要", '"url": "<url>", "question": "<问题>"'
 )
 @validate_url
 def get_text_summary(url: str, question: str) -> str:
@@ -154,10 +155,12 @@ def get_text_summary(url: str, question: str) -> str:
     """
     text = scrape_text(url)
     summary = summarize_text(url, text, question)
-    return f""" "Result" : {summary}"""
+    # return f""" "Result" : {summary}"""
+    return f""" "结果" : {summary}"""
 
 
-@command("get_hyperlinks", "Get text summary", '"url": "<url>"')
+# @command("get_hyperlinks", "Get text summary", '"url": "<url>"')
+@command("get_hyperlinks", "获取文本摘要", '"url": "<url>"')
 @validate_url
 def get_hyperlinks(url: str) -> Union[str, List[str]]:
     """Return the results of a Google search
@@ -179,8 +182,10 @@ def shutdown() -> NoReturn:
 
 @command(
     "start_agent",
-    "Start GPT Agent",
-    '"name": "<name>", "task": "<short_task_desc>", "prompt": "<prompt>"',
+    # "Start GPT Agent",
+    "启动 GPT 代理",
+    # '"name": "<name>", "task": "<short_task_desc>", "prompt": "<prompt>"',
+    '"name": "<name>", "task": "<简短的任务描述>", "prompt": "<prompt>"',
 )
 def start_agent(name: str, task: str, prompt: str, model=CFG.fast_llm_model) -> str:
     """Start an agent with a given name, task, and prompt
@@ -211,10 +216,12 @@ def start_agent(name: str, task: str, prompt: str, model=CFG.fast_llm_model) -> 
     # Assign task (prompt), get response
     agent_response = AGENT_MANAGER.message_agent(key, prompt)
 
-    return f"Agent {name} created with key {key}. First response: {agent_response}"
+    # return f"Agent {name} created with key {key}. First response: {agent_response}"
+    return f"代理 {name} 已经创建， 密钥是 {key}. 第一次响应: {agent_response}"
 
 
-@command("message_agent", "Message GPT Agent", '"key": "<key>", "message": "<message>"')
+# @command("message_agent", "Message GPT Agent", '"key": "<key>", "message": "<message>"')
+@command("message_agent", "向GPT代理发送消息", '"key": "<key>", "message": "<消息>"')
 def message_agent(key: str, message: str) -> str:
     """Message an agent with a given key and message"""
     # Check if the key is a valid integer
@@ -229,7 +236,8 @@ def message_agent(key: str, message: str) -> str:
     return agent_response
 
 
-@command("list_agents", "List GPT Agents", "")
+# @command("list_agents", "List GPT Agents", "")
+@command("list_agents", "列出 GPT 代理", "")
 def list_agents() -> str:
     """List all agents
 
@@ -241,7 +249,7 @@ def list_agents() -> str:
     )
 
 
-@command("delete_agent", "Delete GPT Agent", '"key": "<key>"')
+@command("delete_agent", "删除 GPT 代理", '"key": "<key>"')
 def delete_agent(key: str) -> str:
     """Delete an agent with a given key
 
@@ -252,4 +260,5 @@ def delete_agent(key: str) -> str:
         str: A message indicating whether the agent was deleted or not
     """
     result = AGENT_MANAGER.delete_agent(key)
-    return f"Agent {key} deleted." if result else f"Agent {key} does not exist."
+    # return f"Agent {key} deleted." if result else f"Agent {key} does not exist."
+    return f"代理 {key} 被删除。" if result else f"代理 {key} 不存在。"

@@ -8,8 +8,10 @@ from autogpt.commands.command import command
 
 @command(
     "send_tweet",
-    "Send Tweet",
-    '"tweet_text": "<tweet_text>"',
+    # "Send Tweet",
+    "发送推特",
+    # '"tweet_text": "<tweet_text>"',
+    '"tweet_text": "<推特文本>"',
 )
 def send_tweet(tweet_text: str) -> str:
     """
@@ -36,6 +38,8 @@ def send_tweet(tweet_text: str) -> str:
     # Send tweet
     try:
         api.update_status(tweet_text)
-        return "Tweet sent successfully!"
+        # return "Tweet sent successfully!"
+        return "推特发送成功！"
     except tweepy.TweepyException as e:
-        return f"Error sending tweet: {e.reason}"
+        # return f"Error sending tweet: {e.reason}"
+        return f"发送推文时出错: {e.reason}"

@@ -7,8 +7,10 @@ from autogpt.llm import call_ai_function
 
 @command(
     "analyze_code",
-    "Analyze Code",
-    '"code": "<full_code_string>"',
+    # "Analyze Code",
+    # '"code": "<full_code_string>"',
+    "分析代码",
+    '"code": "<完整的代码字符串>"',
 )
 def analyze_code(code: str) -> list[str]:
     """
@@ -25,7 +27,8 @@ def analyze_code(code: str) -> list[str]:
     function_string = "def analyze_code(code: str) -> list[str]:"
     args = [code]
     description_string = (
-        "Analyzes the given code and returns a list of suggestions for improvements."
+        # "Analyzes the given code and returns a list of suggestions for improvements."
+        "分析给定的代码并返回一个改进建议的列表。"
     )
 
     return call_ai_function(function_string, args, description_string)

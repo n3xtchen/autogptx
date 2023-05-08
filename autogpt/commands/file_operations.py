@@ -143,7 +143,8 @@ def split_file(
         start += max_length - overlap
 
 
-@command("read_file", "Read file", '"filename": "<filename>"')
+# @command("read_file", "Read file", '"filename": "<filename>"')
+@command("read_file", "读取文件", '"filename": "<文件名>"')
 def read_file(filename: str) -> str:
     """Read a file and return the contents
 
@@ -159,7 +160,7 @@ def read_file(filename: str) -> str:
         logger.debug(f"Read file '{filename}' with encoding '{encoding}'")
         return str(charset_match)
     except Exception as err:
-        return f"Error: {err}"
+        return f"错误: {err}"
 
 
 def ingest_file(
@@ -196,7 +197,8 @@ def ingest_file(
         logger.info(f"Error while ingesting file '{filename}': {err}")
 
 
-@command("write_to_file", "Write to file", '"filename": "<filename>", "text": "<text>"')
+# @command("write_to_file", "Write to file", '"filename": "<filename>", "text": "<text>"')
+@command("write_to_file", "写入文件", '"filename": "<文件名>", "text": "<文本>"')
 def write_to_file(filename: str, text: str) -> str:
     """Write text to a file
 
@@ -209,20 +211,22 @@ def write_to_file(filename: str, text: str) -> str:
     """
     checksum = text_checksum(text)
     if is_duplicate_operation("write", filename, checksum):
-        return "Error: File has already been updated."
+        # return "Error: File has already been updated."
+        return "错误: 文件已经更新过了。"
     try:
         directory = os.path.dirname(filename)
         os.makedirs(directory, exist_ok=True)
         with open(filename, "w", encoding="utf-8") as f:
             f.write(text)
         log_operation("write", filename, checksum)
-        return "File written to successfully."
+        return "文件写入成功。"
     except Exception as err:
-        return f"Error: {err}"
+        return f"错误: {err}"
 
 
 @command(
-    "append_to_file", "Append to file", '"filename": "<filename>", "text": "<text>"'
+    # "append_to_file", "Append to file", '"filename": "<filename>", "text": "<text>"'
+    "append_to_file", "追加到文件", '"filename": "<文件名>", "text": "<文本>"'
 )
 def append_to_file(filename: str, text: str, should_log: bool = True) -> str:
     """Append text to a file
@@ -246,12 +250,13 @@ def append_to_file(filename: str, text: str, should_log: bool = True) -> str:
                 checksum = text_checksum(f.read())
             log_operation("append", filename, checksum=checksum)
 
-        return "Text appended successfully."
+        return "文本已成功追加。"
     except Exception as err:
-        return f"Error: {err}"
+        return f"错误: {err}"
 
 
-@command("delete_file", "Delete file", '"filename": "<filename>"')
+# @command("delete_file", "Delete file", '"filename": "<filename>"')
+@command("delete_file", "删除文件", '"filename": "<文件名>"')
 def delete_file(filename: str) -> str:
     """Delete a file
 
@@ -262,16 +267,20 @@ def delete_file(filename: str) -> str:
         str: A message indicating success or failure
     """
     if is_duplicate_operation("delete", filename):
-        return "Error: File has already been deleted."
+        # return "Error: File has already been deleted."
+        return "错误: 文件已经被删除。"
     try:
         os.remove(filename)
         log_operation("delete", filename)
-        return "File deleted successfully."
+        # return "File deleted successfully."
+        return "文件删除成功。"
     except Exception as err:
-        return f"Error: {err}"
+        # return f"Error: {err}"
+        return f"错误: {err}"
 
 
-@command("list_files", "List Files in Directory", '"directory": "<directory>"')
+# @command("list_files", "List Files in Directory", '"directory": "<directory>"')
+@command("list_files", "列出目录中的文件", '"directory": "<目录>"')
 def list_files(directory: str) -> list[str]:
     """lists files in a directory recursively
 
@@ -297,10 +306,12 @@ def list_files(directory: str) -> list[str]:
 
 @command(
     "download_file",
-    "Download File",
-    '"url": "<url>", "filename": "<filename>"',
+    # "Download File",
+    "下载文件",
+    '"url": "<url>", "filename": "<文件名>"',
     CFG.allow_downloads,
-    "Error: You do not have user authorization to download files locally.",
+    # "Error: You do not have user authorization to download files locally.",
+    "错误: 您没有用户授权来在本地下载文件。",
 )
 def download_file(url, filename):
     """Downloads a file
@@ -336,8 +347,10 @@ def download_file(url, filename):
                         progress = f"{readable_file_size(downloaded_size)} / {readable_file_size(total_size)}"
                         spinner.update_message(f"{message} {progress}")
 
-            return f'Successfully downloaded and locally stored file: "{filename}"! (Size: {readable_file_size(downloaded_size)})'
+            # return f'Successfully downloaded and locally stored file: "{filename}"! (Size: {readable_file_size(downloaded_size)})'
+            return f'成功下载并本地存储文件: "{filename}"! (大小: {readable_file_size(downloaded_size)})'
     except requests.HTTPError as err:
-        return f"Got an HTTP Error whilst trying to download file: {err}"
+        # return f"Got an HTTP Error whilst trying to download file: {err}"
+        return f"在尝试下载文件时遇到了HTTP错误: {err}"
     except Exception as err:
-        return f"Error: {err}"
+        return f"错误: {err}"
