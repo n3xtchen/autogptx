@@ -165,6 +165,6 @@ class PromptGenerator:
             "绩效评估:\n"
             f"{self._generate_numbered_list(self.performance_evaluation)}\n\n"
             "您应该仅以以下描述的 JSON 格式进行响应：\n"
-            f"Response 格式: \n{formatted_response_format} \n"
-            "确保 Response 可以通过 Python 的 json.loads 解析。"
+            f"响应格式: \n{formatted_response_format} \n"
+            "确保响应可以通过 Python 的 json.loads 解析。"
         )

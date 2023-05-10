@@ -12,7 +12,7 @@ CFG = Config()
 
 DEFAULT_TRIGGERING_PROMPT = (
     # "Determine which next command to use, and respond using the format specified above:"
-    "确定要使用哪个下一个命令，并使用上面指定(Response)的 JSON 格式进行响应:"
+    "确定要使用哪个下一个命令，并使用上面指定的格式进行响应(请认知检查下响应是否符合响应格式，是否是json格式？):"
 )
 
 

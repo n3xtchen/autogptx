@@ -73,10 +73,13 @@ def update_running_summary(
             event["role"] = "you"
 
             # Remove "thoughts" dictionary from "content"
-            content_dict = json.loads(event["content"])
-            if "thoughts" in content_dict:
-                del content_dict["thoughts"]
-            event["content"] = json.dumps(content_dict)
+            try:
+                content_dict = json.loads(event["content"])
+                if "thoughts" in content_dict:
+                    del content_dict["thoughts"]
+                event["content"] = json.dumps(content_dict)
+            except:
+                pass
 
         elif event["role"].lower() == "system":
             event["role"] = "your computer"

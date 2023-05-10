@@ -58,7 +58,8 @@ class Agent:
         self.ai_name = ai_name
         self.memory = memory
         self.summary_memory = (
-            "I was created."  # Initial memory necessary to avoid hilucination
+            # "I was created."  # Initial memory necessary to avoid hilucination
+            "我被创建了。"  # Initial memory necessary to avoid hilucination
         )
         self.last_memory_index = 0
         self.full_message_history = full_message_history
