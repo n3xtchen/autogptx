@@ -10,11 +10,15 @@ services:
     env_file:
       - .env
     environment:
-      MEMORY_BACKEND: ${MEMORY_BACKEND:-redis}
-      REDIS_HOST: ${REDIS_HOST:-redis}
+      HTTP_PROXY: "http://127.0.0.1:9981" 
+      HTTPS_PROXY: "http://127.0.0.1:9981"
+      #   MEMORY_BACKEND: ${MEMORY_BACKEND:-redis}
+      #   REDIS_HOST: ${REDIS_HOST:-redis}
     volumes:
       - ./:/app
     profiles: ["exclude-from-up"]
+    network_mode: host
 
   redis:
     image: "redis/redis-stack-server:latest"
+    network_mode: host

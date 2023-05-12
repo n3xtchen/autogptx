@@ -34,7 +34,8 @@ class Command:
 
     def __call__(self, *args, **kwargs) -> Any:
         if not self.enabled:
-            return f"Command '{self.name}' is disabled: {self.disabled_reason}"
+            # return f"Command '{self.name}' is disabled: {self.disabled_reason}"
+            return f"命令 '{self.name}' 不可用: {self.disabled_reason}"
         return self.method(*args, **kwargs)
 
     def __str__(self) -> str:

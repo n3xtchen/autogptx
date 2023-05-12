@@ -234,6 +234,7 @@ def chat_with_ai(
                     continue
                 logger.debug(f"{message['role'].capitalize()}: {message['content']}")
                 logger.debug("")
+                print(f"{message['role'].capitalize()}: {message['content']}")
             logger.debug("----------- END OF CONTEXT ----------------")
 
             # TODO: use a model defined elsewhere, so that model can contain
